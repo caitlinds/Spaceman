@@ -1,0 +1,130 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+height: auto;
+width: auto;
+display: grid;
+grid-template-columns: 1fr 3fr 1fr;
+background-image: url("https://images7.alphacoders.com/115/1151981.jpeg");
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+background-color: black;
+}
+
+.flex-ctr {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+h3 {
+font-family: 'Voltaire', sans-serif;
+font-weight: bold;
+font-size: 66px;
+color: rgb(95 191 75);
+margin-top: 22px;
+margin-bottom: 8px;
+text-shadow: -1px 0 black, 0 2px black, 1px 0 yellow, 0 -1px red;
+}
+
+h4 {
+margin-top: 8px;
+}
+
+nav {
+margin: 10px 0px 10px 0px;
+}
+
+button {
+border-radius: 50%;
+margin: 3px;
+background-color: rgb(224 215 230);
+font-family: 'Voltaire', sans-serif;
+font-weight: bold;
+}
+
+div > button {
+font-size: 24px;
+}
+
+header > button {
+font-size: 18px;
+padding: 5px;
+margin-left: 15px;
+margin-right: 15px;
+}
+
+button:hover {
+background-color: #383b38;
+color: white;
+}
+
+#hdrBtns {
+display: flex;
+justify-content: center;
+}
+
+nav {
+display: inline;
+align-items: center;
+justify-content: center;
+}
+
+aside > img {
+grid-area: one;
+width: 280px;
+height: auto;
+}
+
+div > img {
+width: auto;
+height: 300px;
+}
+
+.winloss-img {
+display: flex;
+align-items: center;
+justify-content: center;
+width: auto;
+height: 300px;
+}
+
+#word-status {
+font-size: 50px;
+margin: 20px;
+font-family: 'Voltaire', sans-serif;
+font-size: 54px;
+font-weight: 900;
+}
+
+.bad-guesses {
+background-color: black;
+}
+
+.bad-guesses:hover {
+  background-color: black;
+}
+
+.correct-guesses {
+background-color: rgb(95 191 75);
+}
+
+.correct-guesses:hover {
+  background-color: rgb(95 191 75);
+}
+
+.hints-revealed {
+background-color: rgb(226 84 43);
+}
+
+.hints-revealed:hover {
+  background-color: rgb(226 84 43);
+  }
+
+section {
+margin-bottom: 14px;
+}
