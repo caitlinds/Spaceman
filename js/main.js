@@ -4,6 +4,8 @@ const MOVIE_WORDS = ['BILL MURRAY', 'BUGS BUNNY', 'DAFFY DUCK', 'SPACE JAM'];
 const SPACE_WORDS = ['JUPITER', 'NEPTUNE', 'MERCURY', 'GALAXY', 'ROCKETSHIP', 'STARS'];
 const BBALL_WORDS = ['MICHAEL JORDAN', 'MONSTARS', 'TUNE SQUAD', 'LEBRON JAMES', 'DUNK'];
 const MAX_WRONG = 6;
+const WIN_AUDIO = new Audio('win-audio.mp3');
+const LOSS_AUDIO = new Audio('loss-audio.wav');
 const IMGS = [
     "imgs/spaceman.png/spacejam-0.png",
     "imgs/spaceman.png/spacejam-1.png",
@@ -27,8 +29,7 @@ let hintLtr;
 let hintsLeft;
 let hintsRevealed;
 let category;
-let clkSound;
-let audio;
+let sound;
 
 /*----- cached element references -----*/
 const message = document.querySelector('h3');
@@ -165,17 +166,15 @@ function renderImage() {
         message.innerText = 'You win!';
         spaceman.src = 'imgs/spacejamwin.png';
         hintText.innerText = 'THE WORD WAS:';
-        audio = new Audio('win-audio.mp3');
         setTimeout(function (){
-            audio.play();
+            WIN_AUDIO.play();
         }, 100)
     }else if (MAX_WRONG === wrongGuesses.length) {
         spaceman.src = 'imgs/spacejam-6.png'
         message.innerText = 'You lose!';
-        audio = new Audio('loss-audio.wav');
-        audio.play();
         guess.textContent = secretWord.join('');
         hintText.innerText = 'THE WORD WAS:';
+        LOSS_AUDIO.play();
         setTimeout(function (){
             spaceman.src = 'imgs/mjcry.png';
         }, 3250)
