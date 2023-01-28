@@ -31,7 +31,7 @@ let clkSound;
 let audio;
 
 /*----- cached element references -----*/
-const message = document.getElementById('message');
+const message = document.querySelector('h3');
 const guess = document.getElementById('word-status');
 //create array of all the letters in the div,
 //...instead of creating a different id for each one
@@ -65,11 +65,8 @@ init();
 
 //start game with movie category, otherwise initialize game with chosen category
 function init(cat) {
-    if (cat === undefined) {
-        secretWord = MOVIE_WORDS[Math.floor(Math.random() *  MOVIE_WORDS.length)].split('');
-    }else{
-        secretWord = cat[Math.floor(Math.random() *  cat.length)].split('');
-    }
+    if (cat === undefined) secretWord = MOVIE_WORDS[Math.floor(Math.random() *  MOVIE_WORDS.length)].split('');
+    else secretWord = cat[Math.floor(Math.random() *  cat.length)].split('');
     renderWord();
     wrongGuesses = [];
     winLoss = null;
@@ -100,9 +97,7 @@ function handleClick(evt) {
         secretWord.forEach(function(char, idx) {
             if(char === letter) wordStatus[idx] = letter;
         })
-    } else {
-        wrongGuesses.push(letter);
-    }
+    } else wrongGuesses.push(letter);
     winLoss = checkForWinLoss();
     render();
 }
@@ -115,17 +110,13 @@ function handleClick(evt) {
 //put the hint letter where it belongs in the secret word
 //check for a win:  if hint caused win we want the game to end
 function handleHint(evt) {
-    if (hintsLeft === 0 && catNav.style.display === 'flex') {
-        displayHints();
-        hintText.innerText = 'Out of hints';
-    }
+    if (winLoss) return;
+    displayHints();
+    if (hintsLeft === 0) return;
     if(hintsLeft === 3) {
-        if(winLoss) return;
         audio = new Audio('hint-audio.wav');
         audio.play();
     }
-    if (winLoss || hintsLeft === 0) return;
-    displayHints();
     hintWord = secretWord.filter((ltr) => (!wordStatus.includes(ltr) && ltr !== ' '));
     hintLtr = hintWord[Math.floor(Math.random() *  hintWord.length)];
     secretWord.forEach(function(char, idx) {
@@ -145,14 +136,7 @@ function handleHint(evt) {
 //checking for win or loss and displaying msg
 //render will render win or loss image
 function checkForWinLoss() {
-    if (wordStatus.join('') === secretWord.join('')) {
-        message.innerText = 'You win!';
-        return true;
-    }
-    if (MAX_WRONG === wrongGuesses.length) {
-        message.innerText = 'You lose!';
-        return true;
-    }
+    if ((wordStatus.join('') === secretWord.join('')) || (MAX_WRONG === wrongGuesses.length)) return true;
     render();
 }
 
@@ -176,19 +160,20 @@ function renderBtnStyle () {
 
 //render images, msg, and audio for win and loss
 function renderImage() {
+    if (!winLoss) spaceman.src = `imgs/spacejam-${wrongGuesses.length}.png`;
     if (wordStatus.join('') === secretWord.join('')) {
-        spaceman.className = 'winloss-img';
+        message.innerText = 'You win!';
         spaceman.src = 'imgs/spacejamwin.png';
         hintText.innerText = 'THE WORD WAS:';
         audio = new Audio('win-audio.mp3');
         setTimeout(function (){
             audio.play();
         }, 100)
-    } else spaceman.src = `imgs/spacejam-${wrongGuesses.length}.png`;
-    if (MAX_WRONG === wrongGuesses.length) {
+    }else if (MAX_WRONG === wrongGuesses.length) {
+        spaceman.src = 'imgs/spacejam-6.png'
+        message.innerText = 'You lose!';
         audio = new Audio('loss-audio.wav');
         audio.play();
-        spaceman.className = 'winloss-img'
         guess.textContent = secretWord.join('');
         hintText.innerText = 'THE WORD WAS:';
         setTimeout(function (){
